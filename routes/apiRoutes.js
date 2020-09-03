@@ -21,18 +21,12 @@ module.exports = function (app) {
         res.json(notes)
     })
 
-    // do we swap the api/characters for ./index or notes.html
     app.post('/api/notes', function (req, res) {
         var notes = getNotes()
-        // req.body hosts is equal to the JSON post sent from the user
-        // This works because of our body parsing middleware
-
-        // can we push the var from index.js of 
+        
         var newcharacter = req.body;
         // console.log(newcharacter);
-        //   how to create a new character ID so it creates the ID once it gets pushed to db.json array
-        //   UUID  there is a npm package for that to create a unique ID  have to google.
-        // We then add the json the user sent to the character array
+        
         notes.push(newcharacter);
 
         //   important
@@ -61,7 +55,5 @@ module.exports = function (app) {
 
         res.sendStatus(200);
     })
-    //   need to use splice for the array of the db.json file to delete a note, so it will have a index. once
-    // the file gets deleted we will need to read then write the saved notes.
-    // ***************change all instances of characters with notes 
+ 
 }
