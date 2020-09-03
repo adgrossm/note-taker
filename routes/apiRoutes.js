@@ -1,7 +1,7 @@
 var fs = require('fs')
 var path = require('path')
 var DB_PATH = path.join(__dirname, '../db/db.json')
-
+var uniqueID = require("uniqid");
 /**
  * 
  * @param {any[]} notes Array of note objects!
@@ -26,23 +26,38 @@ module.exports = function (app) {
         
         var newcharacter = req.body;
         // console.log(newcharacter);
-        
+        newcharacter.id = uniqueID("");
+
         notes.push(newcharacter);
 
         //   important
         saveNotes(notes);
 
         // We then display the JSON to the users
-        res.sendStatus(200)
+        res.json(notes)
+        
     });
 
+    // app.post("/api/notes/:id", function (req, res) {
+    //     // const id = parseInt(req.params.id);
+        
+    //     var notes = getNotes();
+    //     notes = notes.filter(note => note.id !== id);
+       
+    //     // getNotes(notes)
+      
+    //     // renderActiveNote(notes.id);
+        
 
+    //     // We then display the JSON to the users
+    //     res.sendStatus(200)
+    // })
     app.delete("/api/notes/:id", function (req, res) {
-        const id = parseInt(req.params.id);
+        const userId = req.params.id;
 
         var notes = getNotes();
 
-        notes = notes.filter(note => note.id !== id);
+        notes = notes.filter(note => note.id !== userId);
         saveNotes(notes);
         
         // const newNotes = []
@@ -53,7 +68,7 @@ module.exports = function (app) {
         // }
         // saveNotes(newNotes);
 
-        res.sendStatus(200);
+        res.json(notes)
     })
  
 }
